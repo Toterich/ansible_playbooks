@@ -1,0 +1,9 @@
+# This is an "inventory files" for keeping track of all nodes that should be managed by Ansbile.
+#
+# See https://docs.ansible.com/ansible/latest/user_guide/intro_inventory.html#intro-inventory for
+# the official documentation for inventory files.
+#
+# You should copy this file to a file named "hosts" and add nodes to Ansible by adding them
+# line-by-line to the hosts file, e.g.:
+#
+# 192.0.1.2 ansible_user=pi

@@ -1,0 +1,21 @@
+- name: Prepare host for ansible usage
+  hosts: all
+  gather_facts: no
+  become: yes
+
+  tasks:
+    - name: Add the ansible user
+      ansible.builtin.user:
+        name: ansible
+
+    - name: Allow passwordless sudo for ansible user
+      ansible.builtin.copy:
+        dest: /etc/sudoers.d/ansible
+        content: "ansible ALL=(ALL) NOPASSWD: ALL"
+        validate: /usr/sbin/visudo -cf %s
+
+    - name: Deploy authorized key for ansible user
+      ansible.posix.authorized_key:
+        user: ansible
+        state: present
+        key: "{{ lookup('file', lookup('vars', 'ansible_ssh_key') + '.pub') }}"

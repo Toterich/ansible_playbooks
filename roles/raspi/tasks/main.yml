@@ -1,0 +1,16 @@
+# See https://github.com/seamusdemora/PiFormulae/blob/master/RPi4bSleep.md
+- name: Copy adapted bootloader config to node
+  ansible.builtin.copy:
+    src: bootloader_eeprom.conf
+    dest: tmp_bootloader.conf
+
+- name: Apply bootloader config to minimize Rpi power consumption after poweroff
+  ansible.builtin.command: rpi-eeprom-config --apply tmp_bootloader.conf
+
+- name: Remove temporary bootloader file
+  ansible.builtin.file:
+    path: tmp_bootloader.conf
+    state: absent
+
+- name: Reboot for changes to take effect
+  ansible.builtin.reboot:
